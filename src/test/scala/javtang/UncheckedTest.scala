@@ -5,19 +5,20 @@ import java.io.{FileReader, BufferedReader}
 import java.util.concurrent.Callable
 
 import org.scalatest.FunSuite
+import com.google.common.base.Optional
 
 class UncheckedTest extends FunSuite {
   test("Unchecked Test") {
-    val fileContent: String = Unchecked.`with`(new Callable[String] {
+    val fileContent: Optional[String] = Unchecked.call(new Callable[String] {
       def call: String = {
         return getFileContent("/home/itang/.bashrc")
       }
     })
 
-    println(fileContent)
+    println(fileContent.get())
 
     try {
-      Unchecked.`with`(new Callable[String] {
+      Unchecked.call(new Callable[String] {
         def call: String = {
           return getFileContent("/home/itang/.bashrc_bad")
         }
@@ -27,6 +28,22 @@ class UncheckedTest extends FunSuite {
       case e: RuntimeException => {
         System.out.println(e.getMessage)
       }
+    }
+  }
+
+  implicit def optionalToOption[String](optional: Optional[String]): Option[String] = {
+    if (optional.isPresent) Some(optional.get()) else None
+  }
+
+  test("Unchecked for scala") {
+    val result = Unchecked.call(new Callable[String] {
+      def call() = "hello"
+    })
+
+    //FIXME 好吧, 在match pattern下implicit不起作用?
+    optionalToOption(result) match {
+      case Some(msg) => assert(msg === "hello")
+      case None =>
     }
   }
 

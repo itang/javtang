@@ -1,25 +1,30 @@
 package javtang;
 
+import com.google.common.base.Optional;
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
+
 public class TestUnchecked {
   @Test
   public void test() {
-    String fileContent = Unchecked.with(new Callable<String>() {
+    Optional<String> fileContent = Unchecked.call(new Callable<String>() {
       @Override
       public String call() throws Exception {
         return getFileContent("/home/itang/.bashrc");
       }
     });
-    System.out.println(fileContent);
+    assertTrue(fileContent.isPresent());
+    System.out.println(fileContent.get());
 
     try {
-      Unchecked.with(new Callable<String>() {
+      Unchecked.call(new Callable<String>() {
         @Override
         public String call() throws Exception {
           return getFileContent("/home/itang/.bashrc_bad");
