@@ -36,13 +36,17 @@ public class TestUnchecked {
   }
 
   private static String getFileContent(String path) throws IOException {
-    BufferedReader reader = new BufferedReader(new FileReader(path));
-    String line = null;
-    StringBuilder sb = new StringBuilder();
-    String lineSp = System.getProperty("line.separator");
-    while ((line = reader.readLine()) != null) {
-      sb.append(line).append(lineSp);
-    }
-    return sb.toString();
+			if("/home/itang/.bashrc".equals(path)) {
+					return "mock content";
+			}
+
+			BufferedReader reader = new BufferedReader(new FileReader(path));
+			String line = null;
+			StringBuilder sb = new StringBuilder();
+			String lineSp = System.getProperty("line.separator");
+			while ((line = reader.readLine()) != null) {
+					sb.append(line).append(lineSp);
+			}
+			return sb.toString();
   }
 }
