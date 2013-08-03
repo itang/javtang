@@ -27,16 +27,29 @@ public class MapsTest extends Assert {
 
         // 工具方法
         // @MARK javac 正常编译. idea 不能正确推断
-        Map<String, Object> map2 = Maps.newHashMap(P("itang", "18"), P("tqibm", "30"));
+        Map<String, String> map2 = Maps.newHashMapByPairs(P("itang", "18"), P("tqibm", "30"));
         assertEquals("18", map2.get("itang"));
         assertEquals("30", map2.get("tqibm"));
         System.out.println(Maps.toString(map2));
 
-        System.out.println(Maps.newLinkedHashMap(P("name", "itang"), P("password", "test")));
+        assertEquals(map2, Maps.newHashMap("itang", "18", "tqibm", "30"));
+
+        System.out.println(Maps.newLinkedHashMapByPairs(P("name", "itang"), P("password", "test")));
         System.out.println(Maps.toString(Maps.newLinkedHashMap(P("name", "itang"),
                 P("password", "test"))));
+        System.out
+                .println(Maps.toString(Maps.newLinkedHashMap("name", "itang", "password", "test")));
 
-        Map<String, Integer> map3 = Maps.newHashMap(P("math-score", 61), P("phy-score", 80));
+        assertEquals(Maps.newLinkedHashMapByPairs(P("name", "itang"), P("password", "test")),
+                Maps.newLinkedHashMap("name", "itang", 
+                                      "password", "test"));
+
+        Map<String, Integer> map3 = Maps.newHashMapByPairs(P("math-score", 61), P("phy-score", 80));
         System.out.println(Maps.toString(map3));
+
+        Map<String, ? extends Object> map4 = Maps.newHashMap("name", "itang",
+                                                             "age", 30,
+                                                             "addr","sz");
+        assertEquals(30, map4.get("age"));
     }
 }

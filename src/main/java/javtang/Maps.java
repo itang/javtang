@@ -26,20 +26,76 @@ public abstract class Maps {
     }
 
     @SafeVarargs
-    public static <K, V, KK extends K, VV extends V> Map<K, V> newHashMap(Pair<KK, VV>... ps) {
-        Map<K, V> result = new HashMap<>();
-        for (Pair<KK, VV> p : ps) {
-            result.put(p.$1(), p.$2());
-        }
-        return result;
+    public static <K, V> Map<K, V> newHashMapByPairs(Pair<? extends K, ? extends V> p,
+            Pair<? extends K, ? extends V>... ps) {
+        return fill(fill(new HashMap<K, V>(), p), ps);
+    }
+
+    public static <K, V> Map<K, V> newHashMap() {
+        return new HashMap<>();
+    }
+
+    public static <K, V> Map<K, V> newHashMap(K k0, V v0) {
+        return newHashMapByPairs(P(k0, v0));
+    }
+
+    public static <K, V> Map<K, V> newHashMap(K k0, V v0, K k1, V v1) {
+        return newHashMapByPairs(P(k0, v0), P(k1, v1));
+    }
+
+    public static <K, V> Map<K, V> newHashMap(K k0, V v0, K k1, V v1, K k2, V v2) {
+        return newHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2));
+    }
+
+    public static <K, V> Map<K, V> newHashMap(K k0, V v0, K k1, V v1, K k2, V v2, K k3, V v3) {
+        return newHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2), P(k3, v3));
+    }
+
+    public static <K, V> Map<K, V> newHashMap(K k0, V v0, K k1, V v1, K k2, V v2, K k3, V v3, K k4,
+            V v4) {
+        return newHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2), P(k3, v3), P(k4, v4));
+    }
+
+    public static <K, V> Map<K, V> newHashMap(K k0, V v0, K k1, V v1, K k2, V v2, K k3, V v3, K k4,
+            V v4, K k5, V v5) {
+        return newHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2), P(k3, v3), P(k4, v4), P(k5, v5));
     }
 
     @SafeVarargs
-    public static <K, V, KK extends K, VV extends V> Map<K, V> newLinkedHashMap(
-            Pair<KK, VV>... pairs) {
-        Map<K, V> result = new LinkedHashMap<>();
-        fill(result, pairs);
-        return result;
+    public static <K, V> Map<K, V> newLinkedHashMapByPairs(Pair<? extends K, ? extends V> p,
+            Pair<? extends K, ? extends V>... ps) {
+        return fill(fill(new LinkedHashMap<K, V>(), p), ps);
+    }
+
+    public static <K, V> Map<K, V> newLinkedHashMap() {
+        return new LinkedHashMap<>();
+    }
+
+    public static <K, V> Map<K, V> newLinkedHashMap(K k0, V v0) {
+        return newLinkedHashMapByPairs(P(k0, v0));
+    }
+
+    public static <K, V> Map<K, V> newLinkedHashMap(K k0, V v0, K k1, V v1) {
+        return newLinkedHashMapByPairs(P(k0, v0), P(k1, v1));
+    }
+
+    public static <K, V> Map<K, V> newLinkedHashMap(K k0, V v0, K k1, V v1, K k2, V v2) {
+        return newLinkedHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2));
+    }
+
+    public static <K, V> Map<K, V> newLinkedHashMap(K k0, V v0, K k1, V v1, K k2, V v2, K k3, V v3) {
+        return newLinkedHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2), P(k3, v3));
+    }
+
+    public static <K, V> Map<K, V> newLinkedHashMap(K k0, V v0, K k1, V v1, K k2, V v2, K k3, V v3,
+            K k4, V v4) {
+        return newLinkedHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2), P(k3, v3), P(k4, v4));
+    }
+
+    public static <K, V> Map<K, V> newLinkedHashMap(K k0, V v0, K k1, V v1, K k2, V v2, K k3, V v3,
+            K k4, V v4, K k5, V v5) {
+        return newLinkedHashMapByPairs(P(k0, v0), P(k1, v1), P(k2, v2), P(k3, v3), P(k4, v4),
+                P(k5, v5));
     }
 
     public static String toString(@Nullable Map<?, ?> map) {
@@ -55,7 +111,7 @@ public abstract class Maps {
         if (map == null || map.isEmpty()) {
             return Collections.emptyList();
         }
-        List<Pair<A, B>> result = new ArrayList<Pair<A, B>>(map.size());
+        List<Pair<A, B>> result = new ArrayList<>(map.size());
         for (Map.Entry<A, B> it : map.entrySet()) {
             result.add(P(it.getKey(), it.getValue()));
         }
@@ -63,13 +119,13 @@ public abstract class Maps {
     }
 
     @SafeVarargs
-    private static <A, B, KK extends A, VV extends B> void fill(Map<A, B> target,
-            Pair<KK, VV>... pairs) {
+    private static <K, V> Map<K, V> fill(Map<K, V> target, Pair<? extends K, ? extends V>... pairs) {
         if (pairs == null) {
-            return;
+            return null;
         }
-        for (Pair<KK, VV> p : pairs) {
+        for (Pair<? extends K, ? extends V> p : pairs) {
             target.put(p.$1(), p.$2());
         }
+        return target;
     }
 }
