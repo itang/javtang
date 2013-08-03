@@ -10,11 +10,11 @@ javacOptions ++= Seq("-encoding", "UTF-8", "-source", "1.7", "-target", "1.7", "
 
 //compile
 libraryDependencies ++= Seq(
-  "com.google.guava" % "guava" % "14.0.1",
   "com.google.code.findbugs" % "jsr305" % "2.0.1")
 
 //test
 libraryDependencies ++= Seq(
+  "com.google.guava" % "guava" % "14.0.1" % "test->default",
   "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test",
   "junit" % "junit" % "4.11" % "test",
   "com.novocode" % "junit-interface" % "0.8" % "test->default")
