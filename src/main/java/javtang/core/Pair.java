@@ -5,12 +5,16 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Nullable;
+import javax.annotation.concurrent.Immutable;
+
+@Immutable
 public class Pair<A, B> implements Iterable<Object> {
 
     private final A a;
     private final B b;
 
-    public Pair(A a, B b) {
+    public Pair(@Nullable A a, @Nullable B b) {
         this.a = a;
         this.b = b;
     }
@@ -47,23 +51,30 @@ public class Pair<A, B> implements Iterable<Object> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (getClass() != obj.getClass())
+        }
+        if (getClass() != obj.getClass()) {
             return false;
+        }
         Pair<?, ?> other = (Pair<?, ?>) obj;
         if (a == null) {
-            if (other.a != null)
+            if (other.a != null) {
                 return false;
-        } else if (!a.equals(other.a))
+            }
+        } else if (!a.equals(other.a)) {
             return false;
+        }
         if (b == null) {
-            if (other.b != null)
+            if (other.b != null) {
                 return false;
-        } else if (!b.equals(other.b))
+            }
+        } else if (!b.equals(other.b)) {
             return false;
+        }
         return true;
     }
 

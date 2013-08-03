@@ -17,8 +17,8 @@ public class MapsTest extends Assert {
         System.out.println(Maps.toString(map1));
 
         // 匿名类, 构造块调用put方法
-        @SuppressWarnings("serial")
         Map<String, Object> map = new HashMap<String, Object>() {
+            private static final long serialVersionUID = 1L;
             {
                 put("hello", "world");
             }

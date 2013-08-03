@@ -31,7 +31,7 @@ public class Unchecked {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T invoke(Object block, String message) {
+    private static <T> T invoke(Object block, @Nullable String message) {
         try {
             if (block instanceof Callable) {
                 return ((Callable<T>) block).call();

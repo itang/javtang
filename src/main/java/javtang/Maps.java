@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 import javtang.core.Pair;
@@ -20,7 +21,7 @@ import javtang.core.Pair;
 @Immutable
 public abstract class Maps {
 
-    public static <K, V> Pair<K, V> P(K a, V b) {
+    public static <K, V> Pair<K, V> P(@Nullable final K a, @Nullable final V b) {
         return new Pair<K, V>(a, b);
     }
 
@@ -41,7 +42,7 @@ public abstract class Maps {
         return result;
     }
 
-    public static String toString(Map<?, ?> map) {
+    public static String toString(@Nullable Map<?, ?> map) {
         if (map == null) {
             return null;
         }
@@ -50,7 +51,7 @@ public abstract class Maps {
         return sb.append("}").toString();
     }
 
-    public static <A, B> List<Pair<A, B>> toPairs(Map<A, B> map) {
+    public static <A, B> List<Pair<A, B>> toPairs(@Nullable Map<A, B> map) {
         if (map == null || map.isEmpty()) {
             return Collections.emptyList();
         }
