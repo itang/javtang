@@ -21,6 +21,20 @@ import javtang.core.Pair;
 @Immutable
 public abstract class Maps {
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SafeVarargs
+    public static <K, V> Map<K, V> merge(Map m1, Map... ms) {
+        if (ms == null || ms.length == 0) {
+            return m1;
+        }
+        Map ret = m1;
+        for (Map m : ms) {
+            ret.putAll(m);
+        }
+
+        return ret;
+    }
+
     public static <K, V> Pair<K, V> P(@Nullable final K a, @Nullable final V b) {
         return new Pair<K, V>(a, b);
     }

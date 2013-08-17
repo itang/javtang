@@ -1,5 +1,6 @@
 package javtang;
 
+import static org.hamcrest.CoreMatchers.*;
 import static javtang.Maps.P;
 
 import java.util.HashMap;
@@ -9,6 +10,16 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class MapsTest extends Assert {
+
+    @Test
+    public void merge() {
+        Map<String, String> m1 = Maps.newHashMap("age", "18", "name", "itang");
+        Map<String, String> m2 = Maps.newHashMap("age", "30", "name", "itang", "id", "1");
+        Map<String, String> m3 = Maps.newHashMap("addr", "sz");
+        Map<String, String> ret = Maps.merge(m1, m2, m3);
+        assertThat(ret,
+                equalTo(Maps.newHashMap("age", "30", "name", "itang", "id", "1", "addr", "sz")));
+    }
 
     @Test
     public void test_Maps() {
@@ -41,15 +52,13 @@ public class MapsTest extends Assert {
                 .println(Maps.toString(Maps.newLinkedHashMap("name", "itang", "password", "test")));
 
         assertEquals(Maps.newLinkedHashMapByPairs(P("name", "itang"), P("password", "test")),
-                Maps.newLinkedHashMap("name", "itang", 
-                                      "password", "test"));
+                Maps.newLinkedHashMap("name", "itang", "password", "test"));
 
         Map<String, Integer> map3 = Maps.newHashMapByPairs(P("math-score", 61), P("phy-score", 80));
         System.out.println(Maps.toString(map3));
 
-        Map<String, ? extends Object> map4 = Maps.newHashMap("name", "itang",
-                                                             "age", 30,
-                                                             "addr","sz");
+        Map<String, ? extends Object> map4 = Maps.newHashMap("name", "itang", "age", 30, "addr",
+                "sz");
         assertEquals(30, map4.get("age"));
     }
 }
